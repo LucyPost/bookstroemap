@@ -3,21 +3,21 @@
 import "../map.styles.css"
 import "leaflet/dist/leaflet.css";
 import { MapContainer, Marker, Popup, ImageOverlay, useMap, useMapEvents } from "react-leaflet"
-import { CRS, Icon, latLng, latLngBounds, PanOptions } from "leaflet"
+import { CRS, Icon, LatLngExpression, latLngBounds, LatLngBoundsExpression } from "leaflet"
 import { useRef, useMemo, useEffect, useState } from "react"
 import { fetchBookstores } from "../lib/data";
 
 export default function CustomMap() {
-  const position = latLng(7.65, 7.6)
-  const maxBounds = latLngBounds(
-    latLng(0, -2.2),
-    latLng(15.31, 13)
-  )
+  const position = [7.65, 7.6] as LatLngExpression
+  const maxBounds = [
+    [0, -2.2] as LatLngExpression,
+    [15.31, 13] as LatLngExpression
+  ] as LatLngBoundsExpression
 
   const [center, setCenter] = useState(position);
   const [bounds, setBounds] = useState(latLngBounds(
-    latLng(999, 1000),
-    latLng(999, 1000)
+    [999, 1000] as LatLngExpression,
+    [999, 1000] as LatLngExpression
   ));
   const [zoom, setZoom] = useState(6);
 
@@ -163,11 +163,11 @@ function DraggableMarker({id, bounds}) {
 
     const markers = [
         {
-        geocode: latLng(1.95, 2.6),
+        geocode: [1.95, 2.6] as LatLngExpression,
         Popup:"大泽泉书苑"
         },
         {
-        geocode: latLng(9.32, 9),
+        geocode: [9.32, 9] as LatLngExpression,
         Popup:"中国书店(雁翅楼店)"
         }
     ]
