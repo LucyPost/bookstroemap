@@ -3,11 +3,11 @@
 import "../map.styles.css"
 import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, Marker, Popup, ImageOverlay } from "react-leaflet"
-import { Icon, latLng } from "leaflet"
+import { Icon, LatLngExpression } from "leaflet"
 
 export default function OnlineMap() {
 
-    const position = latLng(39.88, 116.33)
+    const position = [39.88, 116.33] as LatLngExpression
 
     const customIcon = new Icon({
         iconUrl: "https://cdn-icons-png.flaticon.com/128/684/684908.png",
@@ -17,12 +17,12 @@ export default function OnlineMap() {
     const markers = [
         {
             id: 1,
-        geocode: latLng(39.879789, 116.329947),
+        geocode: [39.879789, 116.329947] as LatLngExpression,
         Popup:"大泽泉书苑"
         },
         {
             id: 2,
-        geocode: latLng(39.932996, 116.396083),
+        geocode: [39.932996, 116.396083] as LatLngExpression,
         Popup:"中国书店(雁翅楼店)"
         }
     ]
