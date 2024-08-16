@@ -163,11 +163,11 @@ function DraggableMarker({id, bounds}) {
 
     const markers = [
         {
-        geocode: [1.95, 2.6],
+        geocode: latLng(1.95, 2.6),
         Popup:"大泽泉书苑"
         },
         {
-        geocode: [9.32, 9],
+        geocode: latLng(9.32, 9),
         Popup:"中国书店(雁翅楼店)"
         }
     ]
@@ -261,7 +261,7 @@ function DraggableMarker({id, bounds}) {
   }, []);
   
     return (
-      <Marker ref={markerRef} className="" eventHandlers={markerEventHandlers} position={markers[id].geocode} icon={customIcon} opacity={opacity}>
+      <Marker ref={markerRef} eventHandlers={markerEventHandlers} position={markers[id].geocode} icon={customIcon} opacity={opacity}>
         <Popup ref={popRef} className="m-0 z-[900] pointer-events-auto" closeButton={false} autoPan={false} maxHeight={350}>
           <img
             src={bookstores[id].image_url}
