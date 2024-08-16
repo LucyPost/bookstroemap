@@ -16,10 +16,12 @@ export default function OnlineMap() {
 
     const markers = [
         {
+            id: 1,
         geocode: [39.879789, 116.329947],
         Popup:"大泽泉书苑"
         },
         {
+            id: 2,
         geocode: [39.932996, 116.396083],
         Popup:"中国书店(雁翅楼店)"
         }
@@ -34,7 +36,7 @@ export default function OnlineMap() {
                     url="http://wprd01.is.autonavi.com/appmaptile?x={x}&y={y}&z={z}&lang=zh_cn&size=1&scl=1&style=7"
                     />
                     {markers.map((marker) => (
-                        <Marker position={marker.geocode} icon={customIcon}>
+                        <Marker key={marker.id} position={marker.geocode} icon={customIcon}>
                             <Popup>
                                 {marker.Popup}
                             </Popup>
