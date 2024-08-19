@@ -2,8 +2,9 @@
 
 import "../map.styles.css"
 import "leaflet/dist/leaflet.css";
-import { MapContainer, TileLayer, Marker, Popup, ImageOverlay } from "react-leaflet"
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet"
 import { Icon, LatLngExpression } from "leaflet"
+import ResetMapControl from "./react-control-reset-map";
 
 export default function OnlineMap() {
 
@@ -42,6 +43,7 @@ export default function OnlineMap() {
                             </Popup>
                         </Marker>
                     ))}
+                    <ResetMapControl position={"topright"} center={position} zoom={13} />
                 </MapContainer>
             </div>
         </div>
