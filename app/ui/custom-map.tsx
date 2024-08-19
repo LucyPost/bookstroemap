@@ -3,7 +3,7 @@
 import "../map.styles.css"
 import "leaflet/dist/leaflet.css";
 import { MapContainer, ImageOverlay, useMap, useMapEvents } from "react-leaflet"
-import { CRS, Icon, LatLngExpression, latLngBounds, LatLngBoundsExpression } from "leaflet"
+import { CRS, LatLngExpression, latLngBounds, LatLngBoundsExpression } from "leaflet"
 import { useEffect, useState } from "react"
 import { fetchBookstores } from "../lib/data";
 import CustomMarker from "./custom-marker";
@@ -73,6 +73,7 @@ export default function CustomMap() {
           scrollWheelZoom={false}
           dragging={false}
           zoomControl={false}
+          attributionControl={false}
           ref={mapRef => { if (mapRef) mapRef.setView(center, zoom, {animate: false}); }}
           
           style={{ backgroundColor: 'transparent' }}
@@ -108,9 +109,16 @@ function MapVisual({ onViewChange, onViewChangeStart, onViewChangeEnd }) {
 
 // 透明地图
 function MapHidden({ bounds }) {
+  const bookstores = fetchBookstores();
   return (
     <>
-      <CustomMarker id={0} bounds={bounds}/>
+      {bookstores.map((bookstore, index) => (
+        <CustomMarker
+          key={index}
+          bookstore={bookstore}
+          bounds={bounds}
+        />
+        ))}
     </>
   );
 }

@@ -1,35 +1,25 @@
+'use client'
+
 import "../map.styles.css"
 import "leaflet/dist/leaflet.css";
 import { Marker, Popup } from "react-leaflet"
-import { Icon, LatLngExpression } from "leaflet"
-import { useRef, useMemo, useEffect } from "react"
-import { fetchBookstores } from "../lib/data";
+import { Icon } from "leaflet"
+import { useRef, useMemo, useEffect, useState } from "react"
+import { BookStore } from "../lib/definitions";
 
-export default function CustomMarker({id, bounds}) {
+export default function CustomMarker({bookstore, bounds}: {bookstore: BookStore, bounds}) {
     const customIcon = new Icon({
-        iconUrl: "https://cdn-icons-png.flaticon.com/128/684/684908.png",
-        iconSize: [24, 24]
+        iconUrl: bookstore.customMapMarker.iconUrl,
+        iconSize: bookstore.customMapMarker.iconSize
     })
 
-    const markers = [
-        {
-        geocode: [1.95, 2.6] as LatLngExpression,
-        Popup:"大泽泉书苑"
-        },
-        {
-        geocode: [9.32, 9] as LatLngExpression,
-        Popup:"中国书店(雁翅楼店)"
-        }
-    ]
-  
-  const bookstores = fetchBookstores()
-  const opacity = (1.95 < bounds._southWest.lat) ||
-    (1.95 > bounds._northEast.lat) ||
-    (2.6 < bounds._southWest.lng) ||
-    (2.6 > bounds._northEast.lng) ? 0 : 1
+    const opacity = (bookstore.customMapMarker.position.lat < bounds._southWest.lat) ||
+        (bookstore.customMapMarker.position.lat > bounds._northEast.lat) ||
+        (bookstore.customMapMarker.position.lng < bounds._southWest.lng) ||
+        (bookstore.customMapMarker.position.lng > bounds._northEast.lng) ? 0 : 1
 
-  const markerRef = useRef(null)
-  const popRef = useRef(null)
+    const markerRef = useRef(null)
+    const popRef = useRef(null)
   
   const markerEventHandlers = useMemo(
     () => ({
@@ -53,7 +43,7 @@ export default function CustomMarker({id, bounds}) {
   
   useEffect(() => {
     const marker = markerRef.current;
-    let popupElement;
+      let popupElement;
 
     const handlePopupOpen = () => {
       const popup = marker?.getPopup();
@@ -87,13 +77,16 @@ export default function CustomMarker({id, bounds}) {
     marker?.on('popupclose', handlePopupClose);
 
     const onMainMapMoveStart = () => {
-      markerRef.current.getElement().style.transition = 'opacity 0s';
-      markerRef.current.getElement().style.opacity = 0
+        markerRef.current.getElement().style.transition = 'opacity 0s';
+        markerRef.current.getElement().style.opacity = 0
     };
 
     const onMainMapMoveEnd = () => {
-      markerRef.current.getElement().style.transition = 'opacity 0.5s';
-      markerRef.current.getElement().style.opacity = 1
+        markerRef.current.getElement().style.transition = 'opacity 0.5s';
+        markerRef.current.getElement().style.opacity = (bookstore.customMapMarker.position.lat < bounds._southWest.lat) ||
+        (bookstore.customMapMarker.position.lat > bounds._northEast.lat) ||
+        (bookstore.customMapMarker.position.lng < bounds._southWest.lng) ||
+        (bookstore.customMapMarker.position.lng > bounds._northEast.lng) ? 0 : 1
     }
 
     // 监听自定义事件
@@ -108,13 +101,13 @@ export default function CustomMarker({id, bounds}) {
       marker?.off('popupopen', handlePopupOpen);
       marker?.off('popupclose', handlePopupClose);
     };
-  }, []);
+  }, [bounds]);
   
     return (
-      <Marker ref={markerRef} eventHandlers={markerEventHandlers} position={markers[id].geocode} icon={customIcon} opacity={opacity}>
+      <Marker ref={markerRef} eventHandlers={markerEventHandlers} position={bookstore.customMapMarker.position} icon={customIcon} opacity={opacity}>
         <Popup ref={popRef} className="m-0 z-[900] pointer-events-auto" closeButton={false} autoPan={false} maxHeight={350}>
           <img
-            src={bookstores[id].image_url}
+            src={bookstore.image_url}
             alt="顶部图片"
             className="w-full rounded-lg mb-4"
           />
@@ -122,19 +115,19 @@ export default function CustomMarker({id, bounds}) {
           {/* 靠左显示的两行短文本 */}
           <div className="mb-6">
             <p className="text-gray-600 text-medium text-lg !my-2">
-              {bookstores[id].name}
+              {bookstore.name}
             </p>
             <p className="text-gray-600 text-base !my-2">
-              地址：{bookstores[id].address}
+              地址：{bookstore.address}
             </p>
             <p className="text-gray-600 text-base !my-2">
-              电话：{bookstores[id].phone}
+              电话：{bookstore.phone}
             </p>
           </div>
 
           {/* 靠左显示的长文本，行间距与短文本一致，短文本与长文本之间的垂直距离较大 */}
           <p className="text-gray-700 text-base leading-relaxed indent-8">
-            {bookstores[id].description}
+            {bookstore.description}
           </p>
         </Popup>
       </Marker>
