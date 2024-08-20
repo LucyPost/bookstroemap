@@ -14,7 +14,6 @@ const OnlineMap = dynamic(async () => (await import('./online-map')), {
 
 export default function MainMap() {
     const [selected, setSelected] = useState(0);
-    const labels = ['局部地图','高德地图'];
 
     return (
         <div className="flex flex-col items-center w-full">

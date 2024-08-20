@@ -12,7 +12,8 @@ export type BookStore = {
 }
 export type Marker = {
     //position: LatLngExpression
-    position,
+    position
+    gaodeUrl?: string
     iconUrl: string
     iconSize: [number, number]
 }

@@ -12,6 +12,7 @@ export function fetchBookstores() {
     }
     const bookstore1_onlineMapMarker: Marker = {
         position: latLng(39.879789, 116.329947),
+        gaodeUrl: "https://ditu.amap.com/place/B0G2D7NJKJ",
         iconUrl: cutomIconUrl,
         iconSize: [24, 24]
     }
@@ -32,6 +33,7 @@ export function fetchBookstores() {
     }
     const bookstore2_onlineMapMarker: Marker = {
         position: latLng(39.932996, 116.396083),
+        gaodeUrl: "https://ditu.amap.com/place/B0FFG4MCMH",
         iconUrl: cutomIconUrl,
         iconSize: [24, 24]
     }

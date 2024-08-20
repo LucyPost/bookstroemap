@@ -96,7 +96,7 @@ function MapVisual({ onViewChange, onViewChangeStart, onViewChangeEnd }) {
     },
     move: () => {
       onViewChange(map.getCenter(), map.getZoom(), map.getBounds());
-    }
+    },
   });
 
   return (
@@ -117,6 +117,7 @@ function MapHidden({ bounds }) {
           key={index}
           bookstore={bookstore}
           bounds={bounds}
+          mapId={0}
         />
         ))}
     </>

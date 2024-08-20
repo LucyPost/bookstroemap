@@ -4,19 +4,21 @@ import "../map.styles.css"
 import "leaflet/dist/leaflet.css";
 import { Marker, Popup } from "react-leaflet"
 import { Icon } from "leaflet"
-import { useRef, useMemo, useEffect, useState } from "react"
+import { useRef, useMemo, useEffect } from "react"
 import { BookStore } from "../lib/definitions";
+import CustomMapPopup from "./custommap-popup";
 
-export default function CustomMarker({bookstore, bounds}: {bookstore: BookStore, bounds}) {
+export default function CustomMarker({ bookstore, bounds, mapId }: { bookstore: BookStore, bounds, mapId: number }) {
+  const marker = mapId === 0 ? bookstore.customMapMarker : bookstore.onlineMapMarker
     const customIcon = new Icon({
-        iconUrl: bookstore.customMapMarker.iconUrl,
-        iconSize: bookstore.customMapMarker.iconSize
+        iconUrl: marker.iconUrl,
+        iconSize: marker.iconSize
     })
-
-    const opacity = (bookstore.customMapMarker.position.lat < bounds._southWest.lat) ||
-        (bookstore.customMapMarker.position.lat > bounds._northEast.lat) ||
-        (bookstore.customMapMarker.position.lng < bounds._southWest.lng) ||
-        (bookstore.customMapMarker.position.lng > bounds._northEast.lng) ? 0 : 1
+  
+    const opacity = (marker.position.lat < bounds._southWest.lat) ||
+        (marker.position.lat > bounds._northEast.lat) ||
+        (marker.position.lng < bounds._southWest.lng) ||
+        (marker.position.lng > bounds._northEast.lng) ? 0 : 1
 
     const markerRef = useRef(null)
     const popRef = useRef(null)
@@ -40,10 +42,10 @@ export default function CustomMarker({bookstore, bounds}: {bookstore: BookStore,
     }),
     [],
   );
-  
+
   useEffect(() => {
     const marker = markerRef.current;
-      let popupElement;
+    let popupElement;
 
     const handlePopupOpen = () => {
       const popup = marker?.getPopup();
@@ -76,17 +78,34 @@ export default function CustomMarker({bookstore, bounds}: {bookstore: BookStore,
     marker?.on('popupopen', handlePopupOpen);
     marker?.on('popupclose', handlePopupClose);
 
+
+    if (mapId != 0) {
+      marker.on('click', () => {
+        const url = bookstore.onlineMapMarker.gaodeUrl;
+        window.open(url, '_blank')
+      })
+    }
+
+    return () => {
+      marker?.off('popupopen', handlePopupOpen);
+      marker?.off('popupclose', handlePopupClose);
+    }
+  },[])
+  
+  useEffect(() => {
+
     const onMainMapMoveStart = () => {
-        markerRef.current.getElement().style.transition = 'opacity 0s';
-        markerRef.current.getElement().style.opacity = 0
+      markerRef.current.getElement().style.transition = 'opacity 0s';
+      markerRef.current.getElement().style.opacity = 0
     };
 
     const onMainMapMoveEnd = () => {
+        const marker = mapId === 0 ? bookstore.customMapMarker : bookstore.onlineMapMarker
         markerRef.current.getElement().style.transition = 'opacity 0.5s';
-        markerRef.current.getElement().style.opacity = (bookstore.customMapMarker.position.lat < bounds._southWest.lat) ||
-        (bookstore.customMapMarker.position.lat > bounds._northEast.lat) ||
-        (bookstore.customMapMarker.position.lng < bounds._southWest.lng) ||
-        (bookstore.customMapMarker.position.lng > bounds._northEast.lng) ? 0 : 1
+        markerRef.current.getElement().style.opacity = (marker.position.lat < bounds._southWest.lat) ||
+        (marker.position.lat > bounds._northEast.lat) ||
+        (marker.position.lng < bounds._southWest.lng) ||
+        (marker.position.lng > bounds._northEast.lng) ? 0 : 1
     }
 
     // 监听自定义事件
@@ -97,38 +116,19 @@ export default function CustomMarker({bookstore, bounds}: {bookstore: BookStore,
       // 移除事件监听器
       document.getElementById('map-root')?.removeEventListener('onMainMapMoveStart', onMainMapMoveStart);
       document.getElementById('map-root')?.removeEventListener('onMainMapMoveEnd', onMainMapMoveEnd);
-
-      marker?.off('popupopen', handlePopupOpen);
-      marker?.off('popupclose', handlePopupClose);
     };
   }, [bounds]);
   
     return (
-      <Marker ref={markerRef} eventHandlers={markerEventHandlers} position={bookstore.customMapMarker.position} icon={customIcon} opacity={opacity}>
+      <Marker
+        ref={markerRef}
+        eventHandlers={markerEventHandlers}
+        position={marker.position}
+        icon={customIcon}
+        opacity={opacity}
+        >
         <Popup ref={popRef} className="m-0 z-[900] pointer-events-auto" closeButton={false} autoPan={false} maxHeight={350}>
-          <img
-            src={bookstore.image_url}
-            alt="顶部图片"
-            className="w-full rounded-lg mb-4"
-          />
-
-          {/* 靠左显示的两行短文本 */}
-          <div className="mb-6">
-            <p className="text-gray-600 text-medium text-lg !my-2">
-              {bookstore.name}
-            </p>
-            <p className="text-gray-600 text-base !my-2">
-              地址：{bookstore.address}
-            </p>
-            <p className="text-gray-600 text-base !my-2">
-              电话：{bookstore.phone}
-            </p>
-          </div>
-
-          {/* 靠左显示的长文本，行间距与短文本一致，短文本与长文本之间的垂直距离较大 */}
-          <p className="text-gray-700 text-base leading-relaxed indent-8">
-            {bookstore.description}
-          </p>
+          {mapId === 0 ? <CustomMapPopup bookstore={bookstore} /> : <div className="text-center">{bookstore.name}</div>}
         </Popup>
       </Marker>
     )
