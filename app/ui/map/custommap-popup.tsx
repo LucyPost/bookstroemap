@@ -1,4 +1,4 @@
-import { BookStore } from "../lib/definitions"
+import { BookStore } from "../../lib/definitions"
 
 export default function CustomMapPopup({ bookstore }: { bookstore: BookStore }) {
     return (

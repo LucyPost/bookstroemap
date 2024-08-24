@@ -1,26 +1,19 @@
 'use client'
 
-import "../map.styles.css"
+import "../../map.styles.css"
 import "leaflet/dist/leaflet.css";
 import { MapContainer, ImageOverlay, useMap, useMapEvents } from "react-leaflet"
-import { CRS, LatLngExpression, latLngBounds, LatLngBoundsExpression } from "leaflet"
-import { useEffect, useState } from "react"
-import { fetchBookstores } from "../lib/data";
+import { CRS, LatLngExpression, LatLngBoundsExpression } from "leaflet"
+import { useEffect } from "react"
+import { fetchBookstores } from "../../lib/data";
 import CustomMarker from "./custom-marker";
 
-export default function CustomMap() {
+export default function CustomMap({handleViewChangeForMainMap, center, zoom, bounds}) {
   const position = [7.65, 7.6] as LatLngExpression
   const maxBounds = [
     [0, -2.2] as LatLngExpression,
     [15.31, 13] as LatLngExpression
   ] as LatLngBoundsExpression
-
-  const [center, setCenter] = useState(position);
-  const [bounds, setBounds] = useState(latLngBounds(
-    [999, 1000] as LatLngExpression,
-    [999, 1000] as LatLngExpression
-  ));
-  const [zoom, setZoom] = useState(6);
 
   const onMainMapMoveStartInvoke = () => {
     const event = new CustomEvent('onMainMapMoveStart');
@@ -41,47 +34,45 @@ export default function CustomMap() {
   }
 
   const handleViewChange = (newCenter, newZoom, newBounds) => {
-    setCenter(newCenter);
-    setZoom(newZoom);
-    setBounds(newBounds);
+    handleViewChangeForMainMap(newCenter, newZoom, newBounds);
   };
 
   return (
-    <div id="map-root" className="relative w-full h-full">
-      <div className="absolute inset-0 flex items-center border-2 border-blue-200 rounded-lg overflow-hidden justify-center z-[700]">
-        <MapContainer
-          center={position}
-          zoom={6}
-          crs={CRS.Simple}
-          minZoom={6}
-          maxZoom={7}
-          scrollWheelZoom={false}
-          maxBounds={maxBounds}
-          maxBoundsViscosity={1.0}
-        >
-          <DynamicBounds />
-          <MapVisual onViewChangeStart={handleViewChangeStart} onViewChangeEnd={handleViewChangeEnd} onViewChange={handleViewChange} />
+      <div id="map-root" className="relative w-full h-full">
+        <div className="absolute inset-0 flex items-center border-2 border-blue-200 rounded-lg overflow-hidden justify-center z-[700]">
+          <MapContainer
+            center={position}
+            zoom={6}
+            crs={CRS.Simple}
+            minZoom={6}
+            maxZoom={7}
+            scrollWheelZoom={false}
+            maxBounds={maxBounds}
+            maxBoundsViscosity={1.0}
+          >
+            <DynamicBounds />
+            <MapVisual onViewChangeStart={handleViewChangeStart} onViewChangeEnd={handleViewChangeEnd} onViewChange={handleViewChange} />
+            </MapContainer>
+        </div>
+        <div className="absolute top-[-20%] left-[-20%] w-[140%] h-[140%] inset-0 flex items-center justify-center z-[800] pointer-events-none">
+          <MapContainer
+            center={position}
+            zoom={6}
+            crs={CRS.Simple}
+            minZoom={6}
+            maxZoom={7}
+            scrollWheelZoom={false}
+            dragging={false}
+            zoomControl={false}
+            attributionControl={false}
+            ref={mapRef => { if (mapRef) mapRef.setView(center, zoom, {animate: false}); }}
+            
+            style={{ backgroundColor: 'transparent' }}
+          >
+            <MapHidden bounds={bounds} />
           </MapContainer>
+        </div>
       </div>
-      <div className="absolute top-[-20%] left-[-20%] w-[140%] h-[140%] inset-0 flex items-center justify-center z-[800] pointer-events-none">
-        <MapContainer
-          center={position}
-          zoom={6}
-          crs={CRS.Simple}
-          minZoom={6}
-          maxZoom={7}
-          scrollWheelZoom={false}
-          dragging={false}
-          zoomControl={false}
-          attributionControl={false}
-          ref={mapRef => { if (mapRef) mapRef.setView(center, zoom, {animate: false}); }}
-          
-          style={{ backgroundColor: 'transparent' }}
-        >
-          <MapHidden bounds={bounds} />
-          </MapContainer>
-      </div>
-    </div>
   );
 }
 

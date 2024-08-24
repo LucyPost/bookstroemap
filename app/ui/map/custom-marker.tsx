@@ -1,11 +1,10 @@
 'use client'
 
-import "../map.styles.css"
 import "leaflet/dist/leaflet.css";
 import { Marker, Popup } from "react-leaflet"
 import { Icon } from "leaflet"
 import { useRef, useMemo, useEffect } from "react"
-import { BookStore } from "../lib/definitions";
+import { BookStore } from "../../lib/definitions";
 import CustomMapPopup from "./custommap-popup";
 
 export default function CustomMarker({ bookstore, bounds, mapId }: { bookstore: BookStore, bounds, mapId: number }) {

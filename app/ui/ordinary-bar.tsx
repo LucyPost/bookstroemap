@@ -1,4 +1,4 @@
-export default function HexagonalBar({selected, onSelect}) {
+export default function OrdinarylBar({selected, onSelect}) {
     const labels = ['局部地图','高德地图'];
 
     return (
