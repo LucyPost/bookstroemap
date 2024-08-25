@@ -6,33 +6,36 @@ export default function FollowScrollContainer() {
     const sections = document.querySelectorAll(".section") as NodeListOf<HTMLElement>;
 
     const initialTops = Array.from(rectangles).map(rect => rect.getBoundingClientRect().top + window.scrollY);
+    
     const sectionTops = Array.from(sections).map(sec => sec.getBoundingClientRect().top + window.scrollY);
 
     const handleScroll = () => {
-        const scrollPosition = window.scrollY;
+      const scrollPosition = window.scrollY;
+      const topOffset = document.getElementById("map").getBoundingClientRect().bottom + window.scrollY
 
       rectangles.forEach((rect, index) => {
-        const rectangleBottom = initialTops[index] + rect.offsetHeight;
-        const sectionTop = sectionTops[index];
+        const rectangleBottom = initialTops[index] + rect.offsetHeight + topOffset;
+        const sectionTop = sectionTops[index] + topOffset;
 
         const paddingCount = rectangles.length - index - 1
 
-            if (scrollPosition >= sectionTop - window.innerHeight  + (paddingCount + 1) * rect.offsetHeight) {
-              rect.style.position = "relative";
-              rect.style.bottom = "auto";
-              rect.style.top = `${sectionTop - initialTops[0] - index * rect.offsetHeight}px`;
-            } else if (scrollPosition >= rectangleBottom - window.innerHeight + paddingCount * rect.offsetHeight) {
-              rect.style.position = "fixed";
-              rect.style.bottom = `${paddingCount * rect.offsetHeight}px`;
-              rect.style.top = "auto";
-              
-            } else {
-                rect.style.position = "relative";
-                rect.style.bottom = "auto";
-                rect.style.top = "auto";
-            }
-        });
-    };
+        if (scrollPosition >= sectionTop - window.innerHeight + (paddingCount + 1) * rect.offsetHeight) {
+
+          rect.style.position = "relative";
+          rect.style.bottom = "auto";
+          rect.style.top = `${sectionTop - topOffset - index * rect.offsetHeight}px`;
+        } else if (scrollPosition >= rectangleBottom - window.innerHeight + paddingCount * rect.offsetHeight) {
+          rect.style.position = "fixed";
+          rect.style.bottom = `${paddingCount * rect.offsetHeight}px`;
+          rect.style.top = "auto";
+          
+        } else {
+            rect.style.position = "relative";
+            rect.style.bottom = "auto";
+            rect.style.top = "auto";
+        }
+    });
+  };
 
     window.addEventListener("scroll", handleScroll);
     return () => {

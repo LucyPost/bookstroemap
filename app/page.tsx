@@ -11,7 +11,7 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col">
-      <div className="flex justify-center items-center">
+      <div id="map"  className="flex justify-center items-center">
         <MainMap />
       </div>
       <div>
