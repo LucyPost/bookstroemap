@@ -1,6 +1,11 @@
 'use client'
-import MainMap from "./ui/map/main-map";
+
+import dynamic from "next/dynamic";
 import FollowScrollContainer from "./ui/follow-scroll-container";
+
+const MainMap = dynamic(async () => (await import('./ui/map/main-map')), {
+  ssr: false,
+})
 
 export default function Home() {
 

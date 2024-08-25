@@ -9,7 +9,7 @@ import { fetchBookstores } from "../../lib/data";
 import CustomMarker from "./custom-marker";
 
 export default function CustomMap({handleViewChangeForMainMap, center, zoom, bounds}) {
-  const position = [7.65, 7.6] as LatLngExpression
+
   const maxBounds = [
     [0, -2.2] as LatLngExpression,
     [15.31, 13] as LatLngExpression
@@ -41,8 +41,8 @@ export default function CustomMap({handleViewChangeForMainMap, center, zoom, bou
       <div id="map-root" className="relative w-full h-full">
         <div className="absolute inset-0 flex items-center border-2 border-blue-200 rounded-lg overflow-hidden justify-center z-[700]">
           <MapContainer
-            center={position}
-            zoom={6}
+            center={center}
+            zoom={zoom}
             crs={CRS.Simple}
             minZoom={6}
             maxZoom={7}
@@ -56,8 +56,8 @@ export default function CustomMap({handleViewChangeForMainMap, center, zoom, bou
         </div>
         <div className="absolute top-[-20%] left-[-20%] w-[140%] h-[140%] inset-0 flex items-center justify-center z-[800] pointer-events-none">
           <MapContainer
-            center={position}
-            zoom={6}
+            center={center}
+            zoom={zoom}
             crs={CRS.Simple}
             minZoom={6}
             maxZoom={7}
