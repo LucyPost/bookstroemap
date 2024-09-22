@@ -3,7 +3,6 @@
 import dynamic from "next/dynamic";
 import FollowScrollContainer from "./ui/follow-scroll-container";
 import Image from "next/image";
-import OffsetButtons from "./ui/offsetButton";
 import SectionSingleDetail from "./ui/sections/singles-detail";
 
 const MainMap = dynamic(async () => (await import('./ui/map/main-map')), {

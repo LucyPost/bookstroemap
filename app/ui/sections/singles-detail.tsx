@@ -7,10 +7,10 @@ export default function SectionSingleDetail() {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const contents = [
-        <div className="text-black">显示的内容 1</div>,
-        <div className="text-black">显示的内容 2</div>,
-        <div className="text-black">显示的内容 3</div>,
-        <div className="text-black">显示的内容 4</div>
+        <div key={0} className="text-black">显示的内容 1</div>,
+        <div key={1} className="text-black">显示的内容 2</div>,
+        <div key={2} className="text-black">显示的内容 3</div>,
+        <div key={3} className="text-black">显示的内容 4</div>
     ];
 
     const images = [
@@ -27,7 +27,7 @@ export default function SectionSingleDetail() {
           className={`flex items-center space-x-2 py-2 px-4`}
         >
           {/* 按钮内的图标 */}
-          <Image src="/dzfwb.png" alt="icon" width={120} height={120} />
+          <Image key={index} src="/dzfwb.png" alt="icon" width={120} height={120} />
         </button>
       ))
  
