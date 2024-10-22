@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import OrdinarylBar from "../ordinary-bar";
+import RoundLinkBar from "../round-link-bar";
 import { CRS, LatLngExpression, latLngBounds } from "leaflet"
 import { MapContainer, ImageOverlay, TileLayer } from "react-leaflet"
 import CustomMap from "./custom-map";
@@ -46,8 +47,13 @@ export default function MainMap() {
                         <BlurOnlineMap center={onlineMapCenter} zoom={onlineMapZoom} />
                 }
             </div>
-            <div className="flex justify-start w-8/12 mt-24">
-                <OrdinarylBar selected={selected} onSelect={setSelected}/>
+            <div className="flex w-8/12 mt-24">
+                <div className="flex justify-start">
+                    <OrdinarylBar selected={selected} onSelect={setSelected} />
+                </div>
+                <div className="flex ml-auto">
+                    <RoundLinkBar />
+                </div>
             </div>
             <div className="relative w-8/12 flex justify-center items-center aspect-[4/3] mb-8">
                 {

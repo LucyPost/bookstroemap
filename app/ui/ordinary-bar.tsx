@@ -2,7 +2,7 @@ export default function OrdinarylBar({selected, onSelect}) {
     const labels = ['局部地图','高德地图'];
 
     return (
-        <div className="relative flex inset-0 items-start justify-start">
+        <div className="relative flex inset-0">
 
         {/* 按钮 */}
         <div className="relative flex h-10 justify-around">
