@@ -4,13 +4,10 @@ import "../../map.styles.css"
 import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet"
 import { LatLngExpression, latLngBounds } from "leaflet"
-import { fetchBookstores } from "../../lib/data";
 import ResetMapControl from "./react-control-reset-map";
 import CustomMarker from "./custom-marker";
 
-export default function OnlineMap({handleViewChangeForMainMap, center, zoom}) {
-
-    const bookstores = fetchBookstores();
+export default function OnlineMap({handleViewChangeForMainMap, center, zoom, bookstores}) {
 
     const bounds = latLngBounds(
         [1000, 1000] as LatLngExpression,

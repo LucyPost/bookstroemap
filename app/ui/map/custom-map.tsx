@@ -5,10 +5,9 @@ import "leaflet/dist/leaflet.css";
 import { MapContainer, ImageOverlay, useMap, useMapEvents } from "react-leaflet"
 import { CRS, LatLngExpression, LatLngBoundsExpression } from "leaflet"
 import { useEffect } from "react"
-import { fetchBookstores } from "../../lib/data";
 import CustomMarker from "./custom-marker";
 
-export default function CustomMap({handleViewChangeForMainMap, center, zoom, bounds}) {
+export default function CustomMap({handleViewChangeForMainMap, center, zoom, bounds, bookstores}) {
 
   const maxBounds = [
     [0, -2.2] as LatLngExpression,
@@ -69,7 +68,7 @@ export default function CustomMap({handleViewChangeForMainMap, center, zoom, bou
             
             style={{ backgroundColor: 'transparent' }}
           >
-            <MapHidden bounds={bounds} />
+            <MapHidden bounds={bounds} bookstores={bookstores} />
           </MapContainer>
         </div>
       </div>
@@ -99,8 +98,8 @@ function MapVisual({ onViewChange, onViewChangeStart, onViewChangeEnd }) {
 }
 
 // 透明地图
-function MapHidden({ bounds }) {
-  const bookstores = fetchBookstores();
+function MapHidden({ bounds, bookstores}) {
+
   return (
     <>
       {bookstores.map((bookstore, index) => (

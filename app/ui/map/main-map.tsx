@@ -1,4 +1,3 @@
-'use client'
 
 import { useState } from "react";
 import OrdinarylBar from "../ordinary-bar";
@@ -6,6 +5,7 @@ import { CRS, LatLngExpression, latLngBounds } from "leaflet"
 import { MapContainer, ImageOverlay, TileLayer } from "react-leaflet"
 import CustomMap from "./custom-map";
 import OnlineMap from "./online-map";
+import { fetchBookstores } from "../../lib/data";
   
 const initialCustomMapCenter = [7.65, 5.4] as LatLngExpression
 const initialOnlineMapCenter = [39.88, 116.33] as LatLngExpression
@@ -34,6 +34,8 @@ export default function MainMap() {
         setOnlineMapZoom(newZoom);
     }
 
+    const bookstores = fetchBookstores();
+
     return (
         <div className="relative flex flex-col items-center w-full">
             <div className="absolute inset-0 bg-yellow-50">
@@ -55,11 +57,13 @@ export default function MainMap() {
                             center={customMapCenter}
                             zoom={customMapZoom}
                             bounds={customMapBounds}
+                            bookstores={bookstores}
                         /> :
                         <OnlineMap
                             handleViewChangeForMainMap={handleViewChangeOnOnlinemap}
                             center={onlineMapCenter}
                             zoom={onlineMapZoom}
+                            bookstores={bookstores}
                         />
                 }
             </div>
