@@ -1,0 +1,86 @@
+'use client'
+
+import dynamic from "next/dynamic";
+import FollowScrollContainer from "../ui/follow-scroll-container";
+import Image from "next/image";
+import SectionSingleDetail from "../ui/sections/singles-detail";
+
+const MainMap = dynamic(async () => (await import('../ui/map/main-map')), {
+  ssr: false,
+})
+
+export default function Home() {
+
+  return (
+    <main className="flex min-h-screen flex-col">
+      <div>
+      <div id="map"  className="flex justify-center items-center">
+        <MainMap />
+        </div>
+      </div>
+      <div>
+        <div className="absolute w-full z-[1000]">
+          <FollowScrollContainer />
+        </div>
+        <section className="section h-screen">
+          <div className="relative w-full h-full">
+            <Image src="/brick-wall-sp.jpg" fill={true} alt="background picktrue" className="absolute opacity-50 z-[0]"
+              style={{ maskImage: "linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 12.5%, rgba(0, 0, 0, 1) 100%)" }}
+            />
+            <div className="flex w-full h-full pt-12">
+              <div className="w-[14%]">
+                
+              </div>
+              <div className="flex-1 p-12 pl-12 text-xl indent-8 shadow-md z-[100]">
+                <p>最开始看到这一页，很可能会让人觉得，这页和另一页不是完全一样吗？但看到这段文字之后，就会明白，这是不同的两页</p>
+              </div>
+              <div className="relative w-[32.848%]">
+                <Image src="/route1.png" fill={true} alt="background picktrue" className="z-[100] py-8"/>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section className="section h-screen h-[100]">
+          <SectionSingleDetail />
+        </section>
+        <section className="section pt-8 h-screen bg-gray-300">
+          <div className="relative w-full h-full">
+            <Image src="/milkyway.jpg" fill={true} alt="background picktrue" className="absolute opacity-75 z-[0]"
+              style={{ maskImage: "linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 12.5%, rgba(0, 0, 0, 1) 100%)" }}
+            />
+            <div className="flex w-full h-full pt-12">
+              <div className="w-[14%]">
+                
+              </div>
+              <div className="flex-1">
+                <div className="flex space-x-8">
+                  <div className="flex flex-col items-center">
+                    <div className="bg-transparent h-36"></div>
+                    <a href="https://baijiahao.baidu.com/s?id=1796090898604128867" className="bg-white font-bold text-xs bg-opacity-20 rounded-lg shadow-lg p-6 transition transform hover:scale-105 hover:shadow-2xl h-60 w-14">
+                      中国书店：承古萌新 赓续文脉
+                    </a>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <div className="bg-transparent h-52"></div>
+                    <a href="https://new.qq.com/rain/a/20240530A00ONO00" className="bg-white font-bold text-xs text-center break-words bg-opacity-20 rounded-lg shadow-lg p-6 transition transform hover:scale-105 hover:shadow-2xl h-86 w-14">
+                      来京城70余岁中国书店，邂逅古旧书之美
+                    </a>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <div className="bg-transparent h-44"></div>
+                    <a href="https://new.qq.com/rain/a/20220326A04ABC00" className="bg-white font-bold text-xs bg-opacity-20 rounded-lg shadow-lg p-6 transition transform hover:scale-105 hover:shadow-2xl h-50 w-14">
+                      春来北京纪晓岚故居
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div className="w-[32.848%]">
+                
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  );
+}
