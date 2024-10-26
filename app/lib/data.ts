@@ -58,7 +58,7 @@ export function fetchBookstores() {
     const bookstore1_1_onlineMapMarker: Marker = {
         position: latLng(39.925393, 116.359044),
         gaodeUrl: "https://ditu.amap.com/place/B0FFJT9HZT",
-        iconUrl: customIconCyanUrl,
+        iconUrl: cutomIconUrl,
         iconSize: [24, 24]
     }
     const bookstore1_1: BookStore = {
@@ -79,7 +79,7 @@ export function fetchBookstores() {
     const bookstore1_2_onlineMapMarker: Marker = {
         position: latLng(39.895553, 116.384829),
         gaodeUrl: "https://ditu.amap.com/place/B0FFGZ0WVP",
-        iconUrl: customIconCyanUrl,
+        iconUrl: cutomIconUrl,
         iconSize: [24, 24]
     }
     const bookstore1_2: BookStore = {
@@ -100,7 +100,7 @@ export function fetchBookstores() {
     const bookstore1_3_onlineMapMarker: Marker = {
         position: latLng(39.889857, 116.387168),
         gaodeUrl: "https://gaode.com/place/B0K27X70C3",
-        iconUrl: customIconCyanUrl,
+        iconUrl: cutomIconUrl,
         iconSize: [24, 24]
     }
     const bookstore1_3: BookStore = {
@@ -121,7 +121,7 @@ export function fetchBookstores() {
     const bookstore2_1_onlineMapMarker: Marker = {
         position: latLng(39.922358, 116.355119),
         gaodeUrl: "https://gaode.com/place/B0FFI00LS0",
-        iconUrl: customIconPurpleUrl,
+        iconUrl: cutomIconUrl,
         iconSize: [24, 24]
     }
     const bookstore2_1: BookStore = {
@@ -142,7 +142,7 @@ export function fetchBookstores() {
     const bookstore2_2_onlineMapMarker: Marker = {
         position: latLng(39.909415, 116.352804),
         gaodeUrl: "https://gaode.com/place/B0G39AMR8Z",
-        iconUrl: customIconPurpleUrl,
+        iconUrl: cutomIconUrl,
         iconSize: [24, 24]
     }
     const bookstore2_2: BookStore = {
@@ -163,7 +163,7 @@ export function fetchBookstores() {
     const bookstore2_3_onlineMapMarker: Marker = {
         position: latLng(39.915698, 116.344612),
         gaodeUrl: "https://gaode.com/place/B0HKU5XSO4",
-        iconUrl: customIconPurpleUrl,
+        iconUrl: cutomIconUrl,
         iconSize: [24, 24]
     }
     const bookstore2_3: BookStore = {
@@ -184,7 +184,7 @@ export function fetchBookstores() {
     const bookstore2_4_onlineMapMarker: Marker = {
         position: latLng(39.911975, 116.335603),
         gaodeUrl: "https://gaode.com/place/B000A80VA8",
-        iconUrl: customIconPurpleUrl,
+        iconUrl: cutomIconUrl,
         iconSize: [24, 24]
     }
     const bookstore2_4: BookStore = {
